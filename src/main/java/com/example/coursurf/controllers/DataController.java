@@ -1,4 +1,5 @@
 package com.example.coursurf.controllers;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,15 @@ public class DataController {
     @Autowired
     private DbProperties dbProperties;
 
+    /**
+     * Fetch data based on filtering criteria.
+     *
+     * @param searchQuery (optional) Search keyword to filter by title.
+     * @param provider    (optional) Provider name to filter by.
+     * @param rating      (optional) Minimum rating to filter by.
+     * @param limit       (optional) Maximum number of results to return (default: 10).
+     * @return List of objects representing filtered data.
+     */
     @GetMapping("/api/filter")
     public List<Object> fetchData(
             @RequestParam(required = false) String searchQuery,
@@ -48,6 +58,12 @@ public class DataController {
         return data;
     }
 
+    /**
+     * Get trending data based on click counts.
+     *
+     * @param limit (optional) Maximum number of trending items to return (default: 10).
+     * @return List of objects representing trending data.
+     */
     @GetMapping("/api/getTrending")
     public List<Object> getTrendingData(@RequestParam(required = false, defaultValue = "10") int limit) {
         List<Object> trendingData = new ArrayList<>();
@@ -70,17 +86,23 @@ public class DataController {
         return trendingData;
     }
 
+    /**
+     * Increment the click count for a specific course title.
+     *
+     * @param title Title of the course to increment clicks for.
+     * @return ResponseEntity with success message if click count is updated, otherwise error message.
+     */
     @GetMapping("/api/clicked")
     public ResponseEntity<String> incrementClick(@RequestParam String title) {
         String jdbcUrl = "jdbc:mysql://" + dbProperties.getHost() + ":" + dbProperties.getPort() + "/" + dbProperties.getDatabase();
 
         try (Connection connection = DriverManager.getConnection(jdbcUrl, dbProperties.getUser(), dbProperties.getPassword())) {
             String updateQuery = "UPDATE Udemy SET clicks = clicks + 1 WHERE title = ?";
-            
+
             try (PreparedStatement statement = connection.prepareStatement(updateQuery)) {
                 statement.setString(1, title);
                 int rowsUpdated = statement.executeUpdate();
-                
+
                 if (rowsUpdated > 0) {
                     return ResponseEntity.ok("Click count updated for title: " + title);
                 } else {
@@ -93,14 +115,25 @@ public class DataController {
         }
     }
 
-
-
+    /**
+     * Build SQL query for retrieving trending data.
+     *
+     * @param limit Maximum number of rows to return.
+     * @return SQL query string for retrieving trending data.
+     */
     private String buildTrendingQuery(int limit) {
-        // Build query to retrieve rows with highest clicks, limited by 'limit'
         return "SELECT * FROM Udemy ORDER BY clicks DESC LIMIT " + limit;
     }
 
-
+    /**
+     * Build SQL query based on filtering parameters.
+     *
+     * @param searchQuery (optional) Search keyword to filter by title.
+     * @param provider    (optional) Provider name to filter by.
+     * @param rating      (optional) Minimum rating to filter by.
+     * @param limit       Maximum number of rows to return.
+     * @return SQL query string based on provided filtering parameters.
+     */
     private String buildQuery(String searchQuery, String provider, Integer rating, int limit) {
         StringBuilder queryBuilder = new StringBuilder("SELECT * FROM Udemy WHERE 1=1");
 
@@ -120,6 +153,14 @@ public class DataController {
 
         return queryBuilder.toString();
     }
+
+    /**
+     * Convert ResultSet row to JSON object.
+     *
+     * @param resultSet ResultSet containing row data.
+     * @return JSON object representing the ResultSet row.
+     * @throws SQLException If an SQL exception occurs.
+     */
     private Object resultSetToJson(ResultSet resultSet) throws SQLException {
         ObjectMapper objectMapper = new ObjectMapper();
         int columnCount = resultSet.getMetaData().getColumnCount();
