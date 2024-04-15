@@ -45,6 +45,32 @@ public class DataController {
         return data;
     }
 
+    @GetMapping("/api/getTrending")
+    public List<Object> getTrendingData(@RequestParam(required = false, defaultValue = "10") int limit) {
+        List<Object> trendingData = new ArrayList<>();
+
+        String jdbcUrl = "jdbc:mysql://" + dbProperties.getHost() + ":" + dbProperties.getPort() + "/" + dbProperties.getDatabase();
+        try (Connection connection = DriverManager.getConnection(jdbcUrl, dbProperties.getUser(), dbProperties.getPassword())) {
+            String query = buildTrendingQuery(limit);
+
+            try (PreparedStatement statement = connection.prepareStatement(query)) {
+                ResultSet resultSet = statement.executeQuery();
+
+                while (resultSet.next()) {
+                    trendingData.add(resultSetToJson(resultSet));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Handle the exception properly in a real application
+        }
+
+        return trendingData;
+    }
+
+    private String buildTrendingQuery(int limit) {
+        // Build query to retrieve rows with highest clicks, limited by 'limit'
+        return "SELECT * FROM Udemy ORDER BY clicks DESC LIMIT " + limit;
+    }
 
 
     private String buildQuery(String searchQuery, String provider, Integer rating, int limit) {
