@@ -1,5 +1,8 @@
 package com.example.coursurf.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -66,6 +69,31 @@ public class DataController {
 
         return trendingData;
     }
+
+    @GetMapping("/api/clicked")
+    public ResponseEntity<String> incrementClick(@RequestParam String title) {
+        String jdbcUrl = "jdbc:mysql://" + dbProperties.getHost() + ":" + dbProperties.getPort() + "/" + dbProperties.getDatabase();
+
+        try (Connection connection = DriverManager.getConnection(jdbcUrl, dbProperties.getUser(), dbProperties.getPassword())) {
+            String updateQuery = "UPDATE Udemy SET clicks = clicks + 1 WHERE title = ?";
+            
+            try (PreparedStatement statement = connection.prepareStatement(updateQuery)) {
+                statement.setString(1, title);
+                int rowsUpdated = statement.executeUpdate();
+                
+                if (rowsUpdated > 0) {
+                    return ResponseEntity.ok("Click count updated for title: " + title);
+                } else {
+                    return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Title not found: " + title);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Handle the exception properly in a real application
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to update click count for title: " + title);
+        }
+    }
+
+
 
     private String buildTrendingQuery(int limit) {
         // Build query to retrieve rows with highest clicks, limited by 'limit'
