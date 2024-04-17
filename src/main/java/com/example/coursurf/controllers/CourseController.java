@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.ui.Model;
 
 import java.util.List;
 
@@ -50,8 +51,11 @@ public class CourseController {
      * @return List of objects representing trending data.
      */
     @GetMapping("/getTrending")
-    public List<Course> getTrendingCourses(@RequestParam(required = false, defaultValue = "10") int limit) {
-        return courseService.getTrendingCourses(limit);
+    public String getTrendingCourses(Model model, @RequestParam(required = false, defaultValue = "10") int limit) {
+        List<Course> trendingCourses = courseService.getTrendingCourses(limit);
+        System.out.println(trendingCourses);
+        model.addAttribute("trendingCourses", trendingCourses);
+        return "courses";
     }
 
     /**

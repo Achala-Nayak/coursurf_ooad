@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -176,7 +176,7 @@
     </div>
     <div class="inner-container">
       <!-- Dynamic cards will be inserted here -->
-      <div class="card">
+      <!-- <div class="card">
         <div class="sticker sticker-blue">New</div>
         <div class="card-image">
           <img src="https://via.placeholder.com/300" alt="Card Image">
@@ -187,7 +187,19 @@
           <div class="card-provider">Provider: Course Provider</div>
           <div class="card-rating">Rating: 4</div>
         </div>
-      </div>
+      </div> -->
+      <div th:each="course:${trendingCourses}" class="card">
+        <div class="sticker sticker-blue">New</div>
+        <!-- <div class="card-image">
+            <img th:src="${course.image}" alt="Card Image">
+        </div> -->
+        <div class="card-content">
+            <div class="card-title" th:text="${course.title}"></div>
+            <!-- <div class="card-description" th:text="${course.overview}">Description of the course goes here. It can be a bit longer to see how it wraps.</div> -->
+            <div class="card-provider" th:text="'Provider: ' + ${course.Provider}"></div>
+            <div class="card-rating" th:text="'Rating: ' + ${course.ratings}"></div>
+        </div>
+    </div>
       <!-- Repeat the above card structure for multiple cards -->
     </div>
   </div>

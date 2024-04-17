@@ -63,7 +63,7 @@ public class CourseServiceImplement implements CourseService{
                 while (resultSet.next()) {
                     Course course = new Course();
                     course.setTitle(resultSet.getString("title"));
-                    course.setProvider(resultSet.getString("provider"));
+                    course.setProvider(resultSet.getString("Provider"));
                     course.setRatings(resultSet.getInt("ratings"));
                     course.setClicks(resultSet.getInt("clicks"));
                     trendingData.add(course);
