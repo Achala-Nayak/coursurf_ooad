@@ -97,7 +97,7 @@ public class DataController {
         String jdbcUrl = "jdbc:mysql://" + dbProperties.getHost() + ":" + dbProperties.getPort() + "/" + dbProperties.getDatabase();
 
         try (Connection connection = DriverManager.getConnection(jdbcUrl, dbProperties.getUser(), dbProperties.getPassword())) {
-            String updateQuery = "UPDATE Udemy SET clicks = clicks + 1 WHERE title = ?";
+            String updateQuery = "UPDATE Courses SET clicks = clicks + 1 WHERE title = ?";
 
             try (PreparedStatement statement = connection.prepareStatement(updateQuery)) {
                 statement.setString(1, title);
@@ -122,7 +122,7 @@ public class DataController {
      * @return SQL query string for retrieving trending data.
      */
     private String buildTrendingQuery(int limit) {
-        return "SELECT * FROM Udemy ORDER BY clicks DESC LIMIT " + limit;
+        return "SELECT * FROM Courses ORDER BY clicks DESC LIMIT " + limit;
     }
 
     /**
@@ -135,7 +135,7 @@ public class DataController {
      * @return SQL query string based on provided filtering parameters.
      */
     private String buildQuery(String searchQuery, String provider, Integer rating, int limit) {
-        StringBuilder queryBuilder = new StringBuilder("SELECT * FROM Udemy WHERE 1=1");
+        StringBuilder queryBuilder = new StringBuilder("SELECT * FROM Courses WHERE 1=1");
 
         if (searchQuery != null && !searchQuery.isEmpty()) {
             queryBuilder.append(" AND title LIKE '%" + searchQuery + "%'");
@@ -173,5 +173,10 @@ public class DataController {
         }
 
         return objectMapper.convertValue(node, Object.class);
+    }
+
+    public void setDbProperties(DbProperties dbProperties2) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setDbProperties'");
     }
 }
