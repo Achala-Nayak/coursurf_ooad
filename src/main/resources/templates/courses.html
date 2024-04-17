@@ -3,6 +3,32 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta content="" name="keywords">
+  <meta content="" name="description">
+
+  <!-- Favicon -->
+  <link href="img/favicon.ico" rel="icon">
+
+  <!-- Google Web Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Icon Font Stylesheet -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- Libraries Stylesheet -->
+  <link href="lib/animate/animate.min.css" rel="stylesheet">
+  <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+  <!-- Customized Bootstrap Stylesheet -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Template Stylesheet -->
+  <link href="css/style.css" rel="stylesheet">
   <title>Dynamic Cards</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet">
   <style>
@@ -92,7 +118,7 @@
 
     /* Different sticker shapes and colors */
     .sticker-blue {
-      background-color: rgb(213, 103, 13); /* Blue color */
+      background-color:rgb(85, 184, 201); /* Blue color */
     }
 
     .sticker-green {
@@ -123,7 +149,7 @@
       border-radius: 20px;
       margin-left: 2px;
       border: none;
-      background-color: rgb(213, 103, 13);;
+      background-color: rgb(85, 184, 201);
       color: #fff;
       cursor: pointer;
     }
@@ -145,13 +171,31 @@
   </style>
 </head>
 <body>
+  <!-- Navbar Start -->
+<nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
+  <a href="/" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+      <h2 class="m-0 text-primary"><i class="fa fa-book me-3"></i>Coursurf</h2>
+  </a>
+  <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+      <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarCollapse">
+      <div class="navbar-nav ms-auto p-4 p-lg-0">
+          <a href="/" class="nav-item nav-link active">Home</a>
+          <a href="/about" class="nav-item nav-link">About</a>
+          <a href="/courses" class="nav-item nav-link">Courses</a>        
+      </div>
+      <a href="" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Sign Up<i class="fa fa-arrow-right ms-3"></i></a>
+  </div>
+</nav>
+<!-- Navbar End -->
   <div class="outer-container">
-    <h2 style="text-align: center; margin-bottom: 20px; background-color: rgb(213, 103, 13); color: white;">Courses Found</h2>
+    <h2 style="text-align: center; margin-bottom: 20px; background-color: rgb(85, 184, 201); color: white;">Courses Found</h2>
     <div class="search-filter-container">
       <!-- Search bar -->
       <input type="text" class="search-bar" placeholder="Search...">
       <!-- Search button -->
-      <button class="search-button" style="background-color: rgb(213, 103, 13);">Search</button>
+      <button class="search-button" style="background-color: rgb(85, 184, 201);;">Search</button>
     </div>
     <div class="filter-box">
       <!-- Filter based on ratings -->
