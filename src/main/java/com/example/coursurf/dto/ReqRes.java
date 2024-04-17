@@ -4,10 +4,10 @@ package com.example.coursurf.dto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.example.coursurf.entity.OurUsers;
-import com.example.coursurf.entity.Product;
+// import com.example.coursurf.entity.Product;
 import lombok.Data;
 
-import java.util.List;
+// import java.util.List;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -24,6 +24,6 @@ public class ReqRes {
     private String email;
     private String role;
     private String password;
-    private List<Product> products;
+    // private List<Product> products;
     private OurUsers ourUsers;
 }
