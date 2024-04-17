@@ -4,6 +4,7 @@ import com.example.coursurf.dto.ReqRes;
 import com.example.coursurf.services.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +22,7 @@ public class AuthController {
         return ResponseEntity.ok(authService.signUp(signUpRequest));
     }
     @PostMapping("/signin")
-    public ResponseEntity<ReqRes> signIn(@RequestBody ReqRes signInRequest){
+    public ResponseEntity<ReqRes> signIn(@ModelAttribute ReqRes signInRequest){
         return ResponseEntity.ok(authService.signIn(signInRequest));
     }
     @PostMapping("/refresh")

@@ -40,4 +40,14 @@ public class Homecontroller {
     public String contact() {
         return "contact";
     }
+
+    @GetMapping("/signup")
+    public String signup() {
+        return "signup";
+    }
+
+    @GetMapping("/signin")
+    public String signin() {
+        return "signin";
+    }
 }
