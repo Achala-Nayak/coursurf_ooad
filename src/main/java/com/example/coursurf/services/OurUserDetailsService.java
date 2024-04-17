@@ -1,4 +1,4 @@
-package com.example.coursurf.service;
+package com.example.coursurf.services;
 
 import com.example.coursurf.repository.OurUserRepo;
 import org.springframework.beans.factory.annotation.Autowired;

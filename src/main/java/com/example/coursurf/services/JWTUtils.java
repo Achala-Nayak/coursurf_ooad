@@ -1,4 +1,4 @@
-package com.example.coursurf.service;
+package com.example.coursurf.services;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

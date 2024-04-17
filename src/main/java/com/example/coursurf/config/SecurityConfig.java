@@ -1,6 +1,6 @@
 package com.example.coursurf.config;
 
-import com.example.coursurf.service.OurUserDetailsService;
+import com.example.coursurf.services.OurUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

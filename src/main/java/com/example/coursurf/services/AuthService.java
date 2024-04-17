@@ -1,4 +1,4 @@
-package com.example.coursurf.service;
+package com.example.coursurf.services;
 
 import com.example.coursurf.dto.ReqRes;
 import com.example.coursurf.entity.OurUsers;

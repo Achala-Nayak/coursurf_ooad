@@ -1,7 +1,7 @@
 package com.example.coursurf.config;
 
-import com.example.coursurf.service.JWTUtils;
-import com.example.coursurf.service.OurUserDetailsService;
+import com.example.coursurf.services.JWTUtils;
+import com.example.coursurf.services.OurUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;

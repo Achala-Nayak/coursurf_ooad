@@ -1,7 +1,7 @@
 package com.example.coursurf.controllers;
 
 import com.example.coursurf.dto.ReqRes;
-import com.example.coursurf.service.AuthService;
+import com.example.coursurf.services.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
