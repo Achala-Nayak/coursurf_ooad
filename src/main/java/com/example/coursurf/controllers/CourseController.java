@@ -3,7 +3,7 @@ package com.example.coursurf.controllers;
 import com.example.coursurf.model.Course;
 import com.example.coursurf.services.CourseService;
 
-import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +17,7 @@ import java.util.List;
 @RequestMapping("/api")
 public class CourseController {
 
-    @Autowired
+    // @Autowired
     public CourseController(CourseService courseService) {
         this.courseService = courseService;
     }
