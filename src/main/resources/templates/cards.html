@@ -92,7 +92,7 @@
 
     /* Different sticker shapes and colors */
     .sticker-blue {
-      background-color: #007bff; /* Blue color */
+      background-color: rgb(213, 103, 13); /* Blue color */
     }
 
     .sticker-green {
@@ -102,11 +102,78 @@
     .sticker-round {
       border-radius: 50%; /* Round shape */
     }
+
+    /* Search bar and filter styles */
+    .search-filter-container {
+      text-align: center;
+      margin-bottom: 20px;
+      display: flex;
+    }
+
+    .search-bar {
+      width: calc(100% - 120px); /* Adjusted width to accommodate search button */
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    .search-button {
+      width: 100px;
+      padding: 10px;
+      border-radius: 20px;
+      margin-left: 2px;
+      border: none;
+      background-color: rgb(213, 103, 13);;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .filter-box {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .filter-label {
+      margin-right: 10px;
+    }
+
+    .filter-select {
+      padding: 8px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
   </style>
 </head>
 <body>
   <div class="outer-container">
     <h2 style="text-align: center; margin-bottom: 20px; background-color: rgb(213, 103, 13); color: white;">Courses Found</h2>
+    <div class="search-filter-container">
+      <!-- Search bar -->
+      <input type="text" class="search-bar" placeholder="Search...">
+      <!-- Search button -->
+      <button class="search-button" style="background-color: rgb(213, 103, 13);">Search</button>
+    </div>
+    <div class="filter-box">
+      <!-- Filter based on ratings -->
+      <label for="rating-filter" class="filter-label">Filter by Rating:</label>
+      <select id="rating-filter" class="filter-select">
+        <option value="all">All</option>
+        <option value="1">1 Star</option>
+        <option value="2">2 Stars</option>
+        <option value="3">3 Stars</option>
+        <option value="4">4 Stars</option>
+        <option value="5">5 Stars</option>
+      </select>
+      <!-- Filter based on course providers -->
+      <label for="provider-filter" class="filter-label">Filter by Provider:</label>
+      <select id="provider-filter" class="filter-select">
+        <option value="all">All</option>
+        <option value="provider1">Provider 1</option>
+        <option value="provider2">Provider 2</option>
+        <option value="provider3">Provider 3</option>
+        <!-- Add more options as needed -->
+      </select>
+    </div>
     <div class="inner-container">
       <!-- Dynamic cards will be inserted here -->
       <div class="card">
@@ -121,67 +188,6 @@
           <div class="card-rating">Rating: 4</div>
         </div>
       </div>
-      <div class="card">
-        <div class="sticker sticker-green sticker-round">Bestseller</div>
-        <div class="card-image">
-          <img src="https://via.placeholder.com/300" alt="Card Image">
-        </div>
-        <div class="card-content">
-          <div class="card-title">Course Title</div>
-          <div class="card-description">Description of the course goes here. It can be a bit longer to see how it wraps.</div>
-          <div class="card-provider">Provider: Course Provider</div>
-          <div class="card-rating">Rating: 4</div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="sticker sticker-green sticker-round">Bestseller</div>
-        <div class="card-image">
-          <img src="https://via.placeholder.com/300" alt="Card Image">
-        </div>
-        <div class="card-content">
-          <div class="card-title">Course Title</div>
-          <div class="card-description">Description of the course goes here. It can be a bit longer to see how it wraps.</div>
-          <div class="card-provider">Provider: Course Provider</div>
-          <div class="card-rating">Rating: 4</div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="sticker sticker-green sticker-round">Bestseller</div>
-        <div class="card-image">
-          <img src="https://via.placeholder.com/300" alt="Card Image">
-        </div>
-        <div class="card-content">
-          <div class="card-title">Course Title</div>
-          <div class="card-description">Description of the course goes here. It can be a bit longer to see how it wraps.</div>
-          <div class="card-provider">Provider: Course Provider</div>
-          <div class="card-rating">Rating: 4</div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="sticker sticker-green sticker-round">Bestseller</div>
-        <div class="card-image">
-          <img src="https://via.placeholder.com/300" alt="Card Image">
-        </div>
-        <div class="card-content">
-          <div class="card-title">Course Title</div>
-          <div class="card-description">Description of the course goes here. It can be a bit longer to see how it wraps.</div>
-          <div class="card-provider">Provider: Course Provider</div>
-          <div class="card-rating">Rating: 4</div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="sticker sticker-green sticker-round">Bestseller</div>
-        <div class="card-image">
-          <img src="https://via.placeholder.com/300" alt="Card Image">
-        </div>
-        <div class="card-content">
-          <div class="card-title">Course Title</div>
-          <div class="card-description">Description of the course goes here. It can be a bit longer to see how it wraps.</div>
-          <div class="card-provider">Provider: Course Provider</div>
-          <div class="card-rating">Rating: 4</div>
-        </div>
-      </div>
-      
       <!-- Repeat the above card structure for multiple cards -->
     </div>
   </div>
