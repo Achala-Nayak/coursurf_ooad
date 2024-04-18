@@ -250,18 +250,26 @@
 </body>
 <script>
   function handleSearch() {
-    // Get values from search bar and filter dropdowns
+    // Get values from search bar, filter dropdowns, and course limit input
     const searchQuery = encodeURIComponent(document.querySelector('.search-bar').value.trim());
-    const provider = encodeURIComponent(document.querySelector('#provider-filter').value);
     const rating = encodeURIComponent(document.querySelector('#rating-filter').value);
     const limit = encodeURIComponent(document.querySelector('#limit-filter').value);
-
-
+  
+    // Get the selected provider value
+    const providerSelect = document.querySelector('#provider-filter');
+    const provider = encodeURIComponent(providerSelect.value);
+  
     // Construct the updated URL
-    const baseUrl = 'http://localhost:8080/courses';
-    const queryParams = `?searchQuery=${searchQuery}&provider=${provider}&rating=${rating}&limit=${limit}`;
+    const baseUrl = window.location.origin + window.location.pathname;
+    let queryParams = `?searchQuery=${searchQuery}&rating=${rating}&limit=${limit}`;
+  
+    // Only include provider in query if a valid option is selected
+    if (provider && provider !== 'undefined') {
+      queryParams += `&provider=${provider}`;
+    }
+  
     const updatedUrl = baseUrl + queryParams;
-
+  
     // Reload the page with the updated URL
     window.location.href = updatedUrl;
   }
