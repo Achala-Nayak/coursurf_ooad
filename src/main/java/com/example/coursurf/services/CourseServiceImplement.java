@@ -35,8 +35,20 @@ public class CourseServiceImplement implements CourseService{
                 if (resultSet.next()) {
                     course = new Course();
                     course.setTitle(resultSet.getString("title"));
+                    course.setType(resultSet.getString("type"));
                     course.setProvider(resultSet.getString("provider"));
-                    course.setRatings(resultSet.getInt("ratings"));
+                    course.setTaughtBy(resultSet.getString("taughtBy"));
+                    course.setLink(resultSet.getString("link"));
+                    course.setUrl(resultSet.getString("url"));
+                    course.setSideCard(resultSet.getString("sideCard"));
+                    course.setOverview(resultSet.getString("overview"));
+                    course.setRatings(resultSet.getFloat("ratings"));
+                    course.setNoOfRatings(resultSet.getInt("noOfRatings"));
+                    course.setClicks(resultSet.getInt("clicks"));
+                    course.setDuration(resultSet.getString("duration"));
+                    course.setLanguage(resultSet.getString("language"));
+                    course.setFreeOrPaid(resultSet.getString("freeOrPaid"));
+                    course.setBeginnerStatus(resultSet.getString("beginnerStatus"));
                 }
             }
         } catch (SQLException e) {
@@ -47,7 +59,7 @@ public class CourseServiceImplement implements CourseService{
     }
 
     @Override
-    public List<Course> filterCourses(String searchQuery, String provider, Integer rating, int limit) {
+    public List<Course> filterCourses(String searchQuery, String provider, Float rating, int limit) {
         // Implement database access logic here using DataSource and PreparedStatement
         List<Course> data = new ArrayList<>();
 
@@ -61,9 +73,20 @@ public class CourseServiceImplement implements CourseService{
                 while (resultSet.next()) {
                     Course course = new Course();
                     course.setTitle(resultSet.getString("title"));
+                    course.setType(resultSet.getString("type"));
                     course.setProvider(resultSet.getString("provider"));
-                    course.setRatings(resultSet.getInt("ratings"));
+                    course.setTaughtBy(resultSet.getString("taught_by"));
+                    course.setLink(resultSet.getString("link"));
+                    course.setUrl(resultSet.getString("url"));
+                    course.setSideCard(resultSet.getString("side_card"));
+                    // course.setOverview(resultSet.getString("overview"));
+                    course.setRatings(resultSet.getFloat("ratings"));
+                    course.setNoOfRatings(resultSet.getInt("no_of_ratings"));
                     course.setClicks(resultSet.getInt("clicks"));
+                    course.setDuration(resultSet.getString("duration"));
+                    course.setLanguage(resultSet.getString("language"));
+                    course.setFreeOrPaid(resultSet.getString("free_or_Paid"));
+                    course.setBeginnerStatus(resultSet.getString("beginner_status"));
                     data.add(course);
                 }
             }

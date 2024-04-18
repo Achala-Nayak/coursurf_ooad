@@ -26,24 +26,36 @@ public class myUtils {
      * @param limit       Maximum number of rows to return.
      * @return SQL query string based on provided filtering parameters.
      */
-    public static String buildQuery(String searchQuery, String provider, Integer rating, int limit) {
+    public static String buildQuery(String searchQuery, String provider, Float rating, Integer limit) {
         StringBuilder queryBuilder = new StringBuilder("SELECT * FROM ProcessedCourses WHERE 1=1");
-
+    
         if (searchQuery != null && !searchQuery.isEmpty()) {
             queryBuilder.append(" AND title LIKE '%" + searchQuery + "%'");
         }
-
+    
         if (provider != null && !provider.isEmpty()) {
-            queryBuilder.append(" AND Provider LIKE '%" + provider + "%'");
+            queryBuilder.append(" AND Provider LIKE " + sanitize(provider));
         }
-
+    
         if (rating != null && rating > 0) {
-            queryBuilder.append(" AND ratings > " + rating);
+            queryBuilder.append(" AND ratings > " + sanitize(rating));
         }
-
-        queryBuilder.append(" LIMIT " + limit);
-
+    
+        queryBuilder.append(" LIMIT " + sanitize(limit));
+    
         return queryBuilder.toString();
+    }
+    
+    // Helper method to sanitize values for SQL queries
+    private static String sanitize(Object value) {
+        if (value == null) {
+            return "NULL";
+        } else if (value instanceof String) {
+            // Escape single quotes in strings to prevent SQL injection
+            return "'" + ((String) value).replace("'", "''") + "'";
+        } else {
+            return value.toString(); // For numeric values and other types
+        }
     }
 
     /**

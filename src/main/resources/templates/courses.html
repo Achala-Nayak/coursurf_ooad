@@ -29,7 +29,7 @@
 
   <!-- Template Stylesheet -->
   <link href="css/style.css" rel="stylesheet">
-  <title>Dynamic Cards</title>
+  <title>Courses</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet">
   <style>
     /* Custom CSS for card layout */
@@ -201,20 +201,18 @@
       <!-- Filter based on ratings -->
       <label for="rating-filter" class="filter-label">Filter by Rating:</label>
       <select id="rating-filter" class="filter-select">
-        <option value="all">All</option>
-        <option value="1">1 Star</option>
-        <option value="2">2 Stars</option>
-        <option value="3">3 Stars</option>
-        <option value="4">4 Stars</option>
-        <option value="5">5 Stars</option>
+        <option value="1.0">1 Star</option>
+        <option value="2.0">2 Stars</option>
+        <option value="3.0">3 Stars</option>
+        <option value="4.0">4 Stars</option>
+        <option value="5.0">5 Stars</option>
       </select>
       <!-- Filter based on course providers -->
       <label for="provider-filter" class="filter-label">Filter by Provider:</label>
       <select id="provider-filter" class="filter-select">
-        <option value="all">All</option>
-        <option value="provider1">Provider 1</option>
-        <option value="provider2">Provider 2</option>
-        <option value="provider3">Provider 3</option>
+        <option value="Udemy">Udemy</option>
+        <option value="Coursera">Coursera</option>
+        <option value="edX">edX</option>
         <!-- Add more options as needed -->
       </select>
     </div>
@@ -248,4 +246,24 @@
     </div>
   </div>
 </body>
+<script>
+  function handleSearch() {
+    // Get values from search bar and filter dropdowns
+    const searchQuery = encodeURIComponent(document.querySelector('.search-bar').value.trim());
+    const provider = encodeURIComponent(document.querySelector('#provider-filter').value);
+    const rating = encodeURIComponent(document.querySelector('#rating-filter').value);
+    const limit = 2; // Hardcoded limit value, as per your example
+
+    // Construct the updated URL
+    const baseUrl = 'http://localhost:8080/courses';
+    const queryParams = `?searchQuery=${searchQuery}&provider=${provider}&rating=${rating}&limit=${limit}`;
+    const updatedUrl = baseUrl + queryParams;
+
+    // Reload the page with the updated URL
+    window.location.href = updatedUrl;
+  }
+
+  // Add event listener to the search button
+  document.querySelector('.search-button').addEventListener('click', handleSearch);
+</script>
 </html>

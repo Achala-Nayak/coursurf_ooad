@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface CourseService {
     Course getCourseInfo(String course_name);
-    List<Course> filterCourses(String searchQuery, String provider, Integer rating, int limit);
+    List<Course> filterCourses(String searchQuery, String provider, Float rating, int limit);
     List<Course> getTrendingCourses(int limit);
     boolean incrementClick(String title);
 }

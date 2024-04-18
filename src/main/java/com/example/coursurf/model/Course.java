@@ -19,7 +19,7 @@ public class Course {
     private float ratings;
     private int noOfRatings;
     private int clicks;
-    private float duration;
+    private String duration;
     private String language;
     private String freeOrPaid;
     private String beginnerStatus;
@@ -119,11 +119,11 @@ public class Course {
         this.clicks = clicks;
     }
 
-    public float getDuration() {
+    public String getDuration() {
         return duration;
     }
 
-    public void setDuration(float duration) {
+    public void setDuration(String duration) {
         this.duration = duration;
     }
 
