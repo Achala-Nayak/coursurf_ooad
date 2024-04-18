@@ -42,12 +42,12 @@
 
     .outer-container {
       background-color: #ddd; /* Grey background color */
-      padding: 20px;
+      padding: 10px;
     }
 
     .inner-container {
       background-color: #fff; /* White background color */
-      border-radius: 5%;
+      border-radius: 10px;
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
@@ -146,7 +146,7 @@
     .search-button {
       width: 100px;
       padding: 10px;
-      border-radius: 20px;
+      border-radius: 5px;
       margin-left: 2px;
       border: none;
       background-color: rgb(85, 184, 201);
@@ -168,6 +168,24 @@
       border-radius: 5px;
       border: 1px solid #ccc;
     }
+    /* Style for the button */
+        .custom-button {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 5px;
+            background-color: #55b8c9;
+            color: #fff;
+            font-size: 12px;
+            text-decoration: none;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Hover effect */
+        .custom-button:hover {
+            background-color: #6cb3ff;
+        }
   </style>
 </head>
 <body>
@@ -234,7 +252,7 @@
         </div>
       </div> -->
       <div th:each="course:${courses}" class="card">
-        <div class="sticker sticker-blue">New</div>
+        <!-- <div class="sticker sticker-blue">New</div> -->
         <!-- <div class="card-image">
             <img th:src="${course.image}" alt="Card Image">
         </div> -->
@@ -242,7 +260,8 @@
             <div class="card-title" th:text="${course.title}"></div>
             <!-- <div class="card-description" th:text="${course.overview}">Description of the course goes here. It can be a bit longer to see how it wraps.</div> -->
             <div class="card-provider" th:text="'Provider: ' + ${course.provider}"></div>
-            <div class="card-rating" th:text="'Rating: ' + ${course.ratings}"></div>
+            <div class="card-rating" th:text="'Rating: ' + ${course.ratings}" style="margin-bottom: 10px;"></div>
+            <a th:href="${course.link}" class="custom-button" target="_blank">Visit Website</a>
         </div>
     </div>
       <!-- Repeat the above card structure for multiple cards -->

@@ -76,7 +76,7 @@ public class CourseServiceImplement implements CourseService{
                     course.setType(resultSet.getString("type"));
                     course.setProvider(resultSet.getString("provider"));
                     course.setTaughtBy(resultSet.getString("taught_by"));
-                    course.setLink(resultSet.getString("link"));
+                    course.setLink(resultSet.getString("Link"));
                     course.setUrl(resultSet.getString("url"));
                     course.setSideCard(resultSet.getString("side_card"));
                     // course.setOverview(resultSet.getString("overview"));

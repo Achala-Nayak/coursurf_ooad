@@ -161,6 +161,7 @@ public class Course {
             node.put("provider", resultSet.getString("provider"));
             node.put("ratings", resultSet.getInt("ratings"));
             node.put("clicks", resultSet.getInt("clicks"));
+            node.put("link", resultSet.getInt("Link"));
 
             // Create Course object from JSON representation
             Course course = convertJsonToCourse(node);
