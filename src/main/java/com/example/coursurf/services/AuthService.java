@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.Optional;
 
 @Service
 public class AuthService {
@@ -23,25 +24,38 @@ public class AuthService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    public ReqRes signUp(ReqRes registrationRequest){
+    public ReqRes signUp(ReqRes registrationRequest) {
         ReqRes resp = new ReqRes();
         try {
-            OurUsers ourUsers = new OurUsers();
-            ourUsers.setEmail(registrationRequest.getEmail());
-            ourUsers.setPassword(passwordEncoder.encode(registrationRequest.getPassword()));
-            ourUsers.setRole(registrationRequest.getRole());
-            OurUsers ourUserResult = ourUserRepo.save(ourUsers);
-            if (ourUserResult != null && ourUserResult.getId()>0) {
-                resp.setOurUsers(ourUserResult);
-                resp.setMessage("User Saved Successfully");
-                resp.setStatusCode(200);
+            // Check if user with the provided email already exists
+            Optional<OurUsers> existingUser = ourUserRepo.findByEmail(registrationRequest.getEmail());
+            
+            if (existingUser.isPresent()) {
+                // User with this email already exists
+                resp.setMessage("User with this email already exists");
+                resp.setStatusCode(400); // Bad request status
+            } else {
+                // Create a new user object and save it to the database
+                OurUsers ourUsers = new OurUsers();
+                ourUsers.setEmail(registrationRequest.getEmail());
+                ourUsers.setPassword(passwordEncoder.encode(registrationRequest.getPassword()));
+                ourUsers.setRole(registrationRequest.getRole());
+                
+                OurUsers ourUserResult = ourUserRepo.save(ourUsers);
+                
+                if (ourUserResult != null && ourUserResult.getId() > 0) {
+                    resp.setOurUsers(ourUserResult);
+                    resp.setMessage("User Saved Successfully");
+                    resp.setStatusCode(200);
+                }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             resp.setStatusCode(500);
             resp.setError(e.getMessage());
         }
         return resp;
     }
+    
 
     public ReqRes signIn(ReqRes signinRequest){
         ReqRes response = new ReqRes();

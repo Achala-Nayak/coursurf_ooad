@@ -14,7 +14,7 @@ public class myUtils {
      * @return SQL query string for retrieving trending data.
      */
     public static String buildTrendingQuery(int limit) {
-        return "SELECT * FROM Courses ORDER BY clicks DESC LIMIT " + limit;
+        return "SELECT * FROM ProcessedCourses ORDER BY clicks DESC LIMIT " + limit;
     }
 
     /**
@@ -27,7 +27,7 @@ public class myUtils {
      * @return SQL query string based on provided filtering parameters.
      */
     public static String buildQuery(String searchQuery, String provider, Integer rating, int limit) {
-        StringBuilder queryBuilder = new StringBuilder("SELECT * FROM Courses WHERE 1=1");
+        StringBuilder queryBuilder = new StringBuilder("SELECT * FROM ProcessedCourses WHERE 1=1");
 
         if (searchQuery != null && !searchQuery.isEmpty()) {
             queryBuilder.append(" AND title LIKE '%" + searchQuery + "%'");
