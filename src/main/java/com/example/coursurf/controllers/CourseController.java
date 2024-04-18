@@ -10,10 +10,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.ui.Model;
+// import org.springframework.stereotype.Controller;
+// import org.springframework.ui.Model;
 
 import java.util.List;
 
+// @Controller
 @RestController
 @RequestMapping("/api")
 public class CourseController {
@@ -49,15 +51,18 @@ public class CourseController {
      *
      * @param limit (optional) Maximum number of trending items to return (default: 10).
      * @return List of objects representing trending data.
-     */
+    //  */
+    // @GetMapping("/getTrending")
+    // public String getTrendingCourses(Model model, @RequestParam(required = false, defaultValue = "10") int limit) {
+    //     List<Course> trendingCourses = courseService.getTrendingCourses(limit);
+    //     model.addAttribute("courses", trendingCourses); // Add the list of courses to the model
+    //     return "trendingCourses"; // Return the name of the Thymeleaf template
+    // }
     @GetMapping("/getTrending")
-    public String getTrendingCourses(Model model, @RequestParam(required = false, defaultValue = "10") int limit) {
+    public List<Course> getTrendingCourses(@RequestParam(required = false, defaultValue = "10") int limit) {
         List<Course> trendingCourses = courseService.getTrendingCourses(limit);
-        System.out.println(trendingCourses);
-        model.addAttribute("trendingCourses", trendingCourses);
-        return "courses";
+        return trendingCourses;
     }
-
     /**
      * Increment the click count for a specific course title.
      *

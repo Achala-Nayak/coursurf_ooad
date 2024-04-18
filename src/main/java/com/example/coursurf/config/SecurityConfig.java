@@ -45,10 +45,11 @@ public class SecurityConfig {
                         .requestMatchers("/courses/**").hasAnyAuthority("USER")
                         .anyRequest().authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .formLogin(formLogin -> formLogin
-                    .loginPage("/signin") // Specify the custom sign-in page
-                    .permitAll())
-                    
+                // .formLogin(formLogin -> formLogin
+                //     .loginPage("/signin") // Specify the custom sign-in page
+                //     .permitAll()
+                //     .successForwardUrl("/")
+                //     )
                 .addFilterBefore(
                         jwtAuthFIlter, UsernamePasswordAuthenticationFilter.class
                 );
