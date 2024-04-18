@@ -215,6 +215,8 @@
         <option value="edX">edX</option>
         <!-- Add more options as needed -->
       </select>
+      <label for="limit-filter" class="filter-label">Limit:</label>
+      <input type="number" id="limit-filter" class="filter-select" value="2" min="1" max="100">
     </div>
     <div class="inner-container">
       <!-- Dynamic cards will be inserted here -->
@@ -252,7 +254,8 @@
     const searchQuery = encodeURIComponent(document.querySelector('.search-bar').value.trim());
     const provider = encodeURIComponent(document.querySelector('#provider-filter').value);
     const rating = encodeURIComponent(document.querySelector('#rating-filter').value);
-    const limit = 2; // Hardcoded limit value, as per your example
+    const limit = encodeURIComponent(document.querySelector('#limit-filter').value);
+
 
     // Construct the updated URL
     const baseUrl = 'http://localhost:8080/courses';
