@@ -18,7 +18,33 @@ public class CourseServiceImplement implements CourseService{
 
     @Autowired
     private DbProperties dbProperties;
-    
+
+    @Override
+    public Course getCourseInfo(String name) {
+        Course course = null;
+
+        String jdbcUrl = "jdbc:mysql://" + dbProperties.getHost() + ":" + dbProperties.getPort() + "/" + dbProperties.getDatabase();
+        try (Connection connection = DriverManager.getConnection(jdbcUrl, dbProperties.getUser(), dbProperties.getPassword())) {
+            String query = "SELECT * FROM courses WHERE name = ?"; // Modify this query based on your database schema
+
+            try (PreparedStatement statement = connection.prepareStatement(query)) {
+                statement.setString(1, name); // Set the name parameter in the query
+
+                ResultSet resultSet = statement.executeQuery();
+
+                if (resultSet.next()) {
+                    course = new Course();
+                    course.setTitle(resultSet.getString("title"));
+                    course.setProvider(resultSet.getString("provider"));
+                    course.setRatings(resultSet.getInt("ratings"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Handle the exception properly in a real application
+        }
+
+        return course;
+    }
 
     @Override
     public List<Course> filterCourses(String searchQuery, String provider, Integer rating, int limit) {
