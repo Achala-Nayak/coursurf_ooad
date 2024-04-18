@@ -197,7 +197,7 @@
       <!-- Search button -->
       <button class="search-button" style="background-color: rgb(85, 184, 201);;">Search</button>
     </div>
-    <div class="filter-box">
+    <div class="filter-box" style="margin-bottom: 20px;">
       <!-- Filter based on ratings -->
       <label for="rating-filter" class="filter-label">Filter by Rating:</label>
       <select id="rating-filter" class="filter-select">
@@ -210,6 +210,7 @@
       <!-- Filter based on course providers -->
       <label for="provider-filter" class="filter-label">Filter by Provider:</label>
       <select id="provider-filter" class="filter-select">
+        <option value="">Select Provider</option> <!-- Blank option -->
         <option value="Udemy">Udemy</option>
         <option value="Coursera">Coursera</option>
         <option value="edX">edX</option>
