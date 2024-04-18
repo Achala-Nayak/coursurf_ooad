@@ -33,6 +33,8 @@ public class SecurityConfig {
     private OurUserDetailsService ourUserDetailsService;
     @Autowired
     private JWTAuthFIlter jwtAuthFIlter;
+    @Autowired
+    private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
@@ -45,11 +47,11 @@ public class SecurityConfig {
                         .requestMatchers("/courses/**").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                // .formLogin(formLogin -> formLogin
-                //     .loginPage("/signin") // Specify the custom sign-in page
-                //     .permitAll()
-                //     .successForwardUrl("/")
-                //     )
+                .formLogin(formLogin -> formLogin
+                    .loginPage("/signin") // Specify the custom sign-in page
+                    .permitAll()
+                    .successHandler(customAuthenticationSuccessHandler)
+                    )
                 .addFilterBefore(
                         jwtAuthFIlter, UsernamePasswordAuthenticationFilter.class
                 );
