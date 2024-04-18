@@ -3,6 +3,7 @@ package com.example.coursurf.controllers;
 import com.example.coursurf.model.Course;
 import com.example.coursurf.services.CourseService;
 
+import org.springframework.context.annotation.Scope;
 // import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ import java.util.List;
 // @Controller
 @RestController
 @RequestMapping("/api")
+@Scope("singleton")
 public class CourseController {
 
     // @Autowired
