@@ -108,7 +108,7 @@ public class CourseServiceImplement implements CourseService{
         String jdbcUrl = "jdbc:mysql://" + dbProperties.getHost() + ":" + dbProperties.getPort() + "/" + dbProperties.getDatabase();
     
         try (Connection connection = DriverManager.getConnection(jdbcUrl, dbProperties.getUser(), dbProperties.getPassword())) {
-            String updateQuery = "UPDATE Courses SET clicks = clicks + 1 WHERE title = ?";
+            String updateQuery = "UPDATE ProcessedCourses SET clicks = clicks + 1 WHERE title = ?";
     
             try (PreparedStatement statement = connection.prepareStatement(updateQuery)) {
                 statement.setString(1, title);
