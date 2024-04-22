@@ -3,6 +3,9 @@ package com.example.coursurf.services;
 import com.example.coursurf.model.Course;
 import java.sql.*;
 import java.util.List;
+
+import javax.sql.DataSource;
+
 import java.util.ArrayList;
 
 
@@ -16,15 +19,18 @@ import com.example.coursurf.utils.myUtils;
 @Service
 public class CourseServiceImplement implements CourseService{
 
+    // @Autowired
+    // private DbProperties dbProperties;
+
     @Autowired
-    private DbProperties dbProperties;
+    private DataSource dataSource;
 
     @Override
     public Course getCourseInfo(String name) {
         Course course = null;
 
-        String jdbcUrl = "jdbc:mysql://" + dbProperties.getHost() + ":" + dbProperties.getPort() + "/" + dbProperties.getDatabase();
-        try (Connection connection = DriverManager.getConnection(jdbcUrl, dbProperties.getUser(), dbProperties.getPassword())) {
+        // String jdbcUrl = "jdbc:mysql://" + dbProperties.getHost() + ":" + dbProperties.getPort() + "/" + dbProperties.getDatabase();
+        try (Connection connection = dataSource.getConnection()) {
             String query = "SELECT * FROM courses WHERE name = ?"; // Modify this query based on your database schema
 
             try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -35,8 +41,20 @@ public class CourseServiceImplement implements CourseService{
                 if (resultSet.next()) {
                     course = new Course();
                     course.setTitle(resultSet.getString("title"));
+                    course.setType(resultSet.getString("type"));
                     course.setProvider(resultSet.getString("provider"));
-                    course.setRatings(resultSet.getInt("ratings"));
+                    course.setTaughtBy(resultSet.getString("taughtBy"));
+                    course.setLink(resultSet.getString("link"));
+                    course.setUrl(resultSet.getString("url"));
+                    course.setSideCard(resultSet.getString("sideCard"));
+                    course.setOverview(resultSet.getString("overview"));
+                    course.setRatings(resultSet.getFloat("ratings"));
+                    course.setNoOfRatings(resultSet.getInt("noOfRatings"));
+                    course.setClicks(resultSet.getInt("clicks"));
+                    course.setDuration(resultSet.getString("duration"));
+                    course.setLanguage(resultSet.getString("language"));
+                    course.setFreeOrPaid(resultSet.getString("freeOrPaid"));
+                    course.setBeginnerStatus(resultSet.getString("beginnerStatus"));
                 }
             }
         } catch (SQLException e) {
@@ -47,12 +65,12 @@ public class CourseServiceImplement implements CourseService{
     }
 
     @Override
-    public List<Course> filterCourses(String searchQuery, String provider, Integer rating, int limit) {
+    public List<Course> filterCourses(String searchQuery, String provider, Float rating, int limit) {
         // Implement database access logic here using DataSource and PreparedStatement
         List<Course> data = new ArrayList<>();
 
-        String jdbcUrl = "jdbc:mysql://" + dbProperties.getHost() + ":" + dbProperties.getPort() + "/" + dbProperties.getDatabase();
-        try (Connection connection = DriverManager.getConnection(jdbcUrl, dbProperties.getUser(), dbProperties.getPassword())) {
+        // String jdbcUrl = "jdbc:mysql://" + dbProperties.getHost() + ":" + dbProperties.getPort() + "/" + dbProperties.getDatabase();
+        try (Connection connection = dataSource.getConnection()) {
             String query = myUtils.buildQuery(searchQuery, provider, rating, limit);
 
             try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -61,9 +79,20 @@ public class CourseServiceImplement implements CourseService{
                 while (resultSet.next()) {
                     Course course = new Course();
                     course.setTitle(resultSet.getString("title"));
+                    course.setType(resultSet.getString("type"));
                     course.setProvider(resultSet.getString("provider"));
-                    course.setRatings(resultSet.getInt("ratings"));
+                    course.setTaughtBy(resultSet.getString("taught_by"));
+                    course.setLink(resultSet.getString("Link"));
+                    course.setUrl(resultSet.getString("url"));
+                    course.setSideCard(resultSet.getString("side_card"));
+                    // course.setOverview(resultSet.getString("overview"));
+                    course.setRatings(resultSet.getFloat("ratings"));
+                    course.setNoOfRatings(resultSet.getInt("no_of_ratings"));
                     course.setClicks(resultSet.getInt("clicks"));
+                    course.setDuration(resultSet.getString("duration"));
+                    course.setLanguage(resultSet.getString("language"));
+                    course.setFreeOrPaid(resultSet.getString("free_or_Paid"));
+                    course.setBeginnerStatus(resultSet.getString("beginner_status"));
                     data.add(course);
                 }
             }
@@ -79,8 +108,8 @@ public class CourseServiceImplement implements CourseService{
         // Implement database access logic here using DataSource and PreparedStatement
         List<Course> trendingData = new ArrayList<>();
 
-        String jdbcUrl = "jdbc:mysql://" + dbProperties.getHost() + ":" + dbProperties.getPort() + "/" + dbProperties.getDatabase();
-        try (Connection connection = DriverManager.getConnection(jdbcUrl, dbProperties.getUser(), dbProperties.getPassword())) {
+        // String jdbcUrl = "jdbc:mysql://" + dbProperties.getHost() + ":" + dbProperties.getPort() + "/" + dbProperties.getDatabase();
+        try (Connection connection = dataSource.getConnection()) {
             String query = myUtils.buildTrendingQuery(limit);
 
             try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -92,6 +121,8 @@ public class CourseServiceImplement implements CourseService{
                     course.setProvider(resultSet.getString("Provider"));
                     course.setRatings(resultSet.getInt("ratings"));
                     course.setClicks(resultSet.getInt("clicks"));
+                    course.setLink(resultSet.getString("Link"));
+                    course.setUrl(resultSet.getString("url"));
                     trendingData.add(course);
                 }
             }
@@ -105,9 +136,9 @@ public class CourseServiceImplement implements CourseService{
     
     
     public boolean incrementClick(String title) {
-        String jdbcUrl = "jdbc:mysql://" + dbProperties.getHost() + ":" + dbProperties.getPort() + "/" + dbProperties.getDatabase();
+        // String jdbcUrl = "jdbc:mysql://" + dbProperties.getHost() + ":" + dbProperties.getPort() + "/" + dbProperties.getDatabase();
     
-        try (Connection connection = DriverManager.getConnection(jdbcUrl, dbProperties.getUser(), dbProperties.getPassword())) {
+        try (Connection connection = dataSource.getConnection()) {
             String updateQuery = "UPDATE ProcessedCourses SET clicks = clicks + 1 WHERE title = ?";
     
             try (PreparedStatement statement = connection.prepareStatement(updateQuery)) {

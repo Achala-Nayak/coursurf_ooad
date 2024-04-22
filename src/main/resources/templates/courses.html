@@ -29,7 +29,7 @@
 
   <!-- Template Stylesheet -->
   <link href="css/style.css" rel="stylesheet">
-  <title>Dynamic Cards</title>
+  <title>Courses</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet">
   <style>
     /* Custom CSS for card layout */
@@ -42,12 +42,12 @@
 
     .outer-container {
       background-color: #ddd; /* Grey background color */
-      padding: 20px;
+      padding: 10px;
     }
 
     .inner-container {
       background-color: #fff; /* White background color */
-      border-radius: 5%;
+      border-radius: 10px;
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
@@ -146,7 +146,7 @@
     .search-button {
       width: 100px;
       padding: 10px;
-      border-radius: 20px;
+      border-radius: 5px;
       margin-left: 2px;
       border: none;
       background-color: rgb(85, 184, 201);
@@ -168,6 +168,24 @@
       border-radius: 5px;
       border: 1px solid #ccc;
     }
+    /* Style for the button */
+        .custom-button {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 5px;
+            background-color: #55b8c9;
+            color: #fff;
+            font-size: 12px;
+            text-decoration: none;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Hover effect */
+        .custom-button:hover {
+            background-color: #6cb3ff;
+        }
   </style>
 </head>
 <body>
@@ -184,6 +202,7 @@
           <a href="/" class="nav-item nav-link active">Home</a>
           <a href="/about" class="nav-item nav-link">About</a>
           <a href="/courses" class="nav-item nav-link">Courses</a>        
+          <a href="/getTrending" class="nav-item nav-link">Trending</a>  
       </div>
       <a href="" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Sign Up<i class="fa fa-arrow-right ms-3"></i></a>
   </div>
@@ -197,26 +216,27 @@
       <!-- Search button -->
       <button class="search-button" style="background-color: rgb(85, 184, 201);;">Search</button>
     </div>
-    <div class="filter-box">
+    <div class="filter-box" style="margin-bottom: 20px;">
       <!-- Filter based on ratings -->
       <label for="rating-filter" class="filter-label">Filter by Rating:</label>
       <select id="rating-filter" class="filter-select">
-        <option value="all">All</option>
-        <option value="1">1 Star</option>
-        <option value="2">2 Stars</option>
-        <option value="3">3 Stars</option>
-        <option value="4">4 Stars</option>
-        <option value="5">5 Stars</option>
+        <option value="1.0">1 Star</option>
+        <option value="2.0">2 Stars</option>
+        <option value="3.0">3 Stars</option>
+        <option value="4.0">4 Stars</option>
+        <option value="5.0">5 Stars</option>
       </select>
       <!-- Filter based on course providers -->
       <label for="provider-filter" class="filter-label">Filter by Provider:</label>
       <select id="provider-filter" class="filter-select">
-        <option value="all">All</option>
-        <option value="provider1">Provider 1</option>
-        <option value="provider2">Provider 2</option>
-        <option value="provider3">Provider 3</option>
+        <option value="">Select Provider</option> <!-- Blank option -->
+        <option value="Udemy">Udemy</option>
+        <option value="Coursera">Coursera</option>
+        <option value="edX">edX</option>
         <!-- Add more options as needed -->
       </select>
+      <label for="limit-filter" class="filter-label">Limit:</label>
+      <input type="number" id="limit-filter" class="filter-select" value="2" min="1" max="100">
     </div>
     <div class="inner-container">
       <!-- Dynamic cards will be inserted here -->
@@ -233,7 +253,7 @@
         </div>
       </div> -->
       <div th:each="course:${courses}" class="card">
-        <div class="sticker sticker-blue">New</div>
+        <!-- <div class="sticker sticker-blue">New</div> -->
         <!-- <div class="card-image">
             <img th:src="${course.image}" alt="Card Image">
         </div> -->
@@ -241,11 +261,41 @@
             <div class="card-title" th:text="${course.title}"></div>
             <!-- <div class="card-description" th:text="${course.overview}">Description of the course goes here. It can be a bit longer to see how it wraps.</div> -->
             <div class="card-provider" th:text="'Provider: ' + ${course.provider}"></div>
-            <div class="card-rating" th:text="'Rating: ' + ${course.ratings}"></div>
+            <div class="card-rating" th:text="'Rating: ' + ${course.ratings}" style="margin-bottom: 10px;"></div>
+            <a th:href="${course.link}" class="custom-button" target="_blank">Visit Website</a>
         </div>
     </div>
       <!-- Repeat the above card structure for multiple cards -->
     </div>
   </div>
 </body>
+<script>
+  function handleSearch() {
+    // Get values from search bar, filter dropdowns, and course limit input
+    const searchQuery = encodeURIComponent(document.querySelector('.search-bar').value.trim());
+    const rating = encodeURIComponent(document.querySelector('#rating-filter').value);
+    const limit = encodeURIComponent(document.querySelector('#limit-filter').value);
+  
+    // Get the selected provider value
+    const providerSelect = document.querySelector('#provider-filter');
+    const provider = encodeURIComponent(providerSelect.value);
+  
+    // Construct the updated URL
+    const baseUrl = window.location.origin + window.location.pathname;
+    let queryParams = `?searchQuery=${searchQuery}&rating=${rating}&limit=${limit}`;
+  
+    // Only include provider in query if a valid option is selected
+    if (provider && provider !== 'undefined') {
+      queryParams += `&provider=${provider}`;
+    }
+  
+    const updatedUrl = baseUrl + queryParams;
+  
+    // Reload the page with the updated URL
+    window.location.href = updatedUrl;
+  }
+
+  // Add event listener to the search button
+  document.querySelector('.search-button').addEventListener('click', handleSearch);
+</script>
 </html>

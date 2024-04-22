@@ -36,7 +36,7 @@ public class ViewController {
     public ModelAndView filterCourses(
         @RequestParam(required = false) String searchQuery,
         @RequestParam(required = false) String provider,
-        @RequestParam(required = false) Integer rating,
+        @RequestParam(required = false) Float rating,
         @RequestParam(required = false, defaultValue = "10") int limit,
         Model model) {
 

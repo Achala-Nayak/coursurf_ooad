@@ -1,28 +1,244 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Trending Courses</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta content="" name="keywords">
+  <meta content="" name="description">
+
+  <!-- Favicon -->
+  <link href="img/favicon.ico" rel="icon">
+
+  <!-- Google Web Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Icon Font Stylesheet -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- Libraries Stylesheet -->
+  <link href="lib/animate/animate.min.css" rel="stylesheet">
+  <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+  <!-- Customized Bootstrap Stylesheet -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Template Stylesheet -->
+  <link href="css/style.css" rel="stylesheet">
+  <title>Courses</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* Custom CSS for card layout */
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f0f0f0;
+    }
+
+    .outer-container {
+      background-color: #ddd; /* Grey background color */
+      padding: 10px;
+    }
+
+    .inner-container {
+      background-color: #fff; /* White background color */
+      border-radius: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .card {
+      position: relative; /* Enable absolute positioning for stickers */
+      width: 300px;
+      background-color: #fff;
+      margin: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease-in-out; /* Add transition for smooth animation */
+    }
+
+    .card:hover {
+      transform: scale(1.05); /* Scale up slightly on hover */
+    }
+
+    .card img {
+      width: 100%;
+      height: 200px;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      object-fit: cover;
+    }
+
+    .card-content {
+      padding: 20px;
+    }
+
+    .card-title {
+      margin: 0;
+      font-size: 20px;
+      color: #333;
+    }
+
+    .card-description {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #666;
+    }
+
+    .card-provider {
+      margin-top: 10px;
+      font-size: 12px;
+      color: #999;
+    }
+
+    .card-rating {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #333;
+    }
+
+    /* Sticker styles */
+    .sticker {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      padding: 5px 10px;
+      border-radius: 5px;
+      color: #fff;
+      font-size: 12px;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    /* Different sticker shapes and colors */
+    .sticker-blue {
+      background-color:rgb(85, 184, 201); /* Blue color */
+    }
+
+    .sticker-green {
+      background-color: #28a745; /* Green color */
+    }
+
+    .sticker-round {
+      border-radius: 50%; /* Round shape */
+    }
+
+    /* Search bar and filter styles */
+    .search-filter-container {
+      text-align: center;
+      margin-bottom: 20px;
+      display: flex;
+    }
+
+    .search-bar {
+      width: calc(100% - 120px); /* Adjusted width to accommodate search button */
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    .search-button {
+      width: 100px;
+      padding: 10px;
+      border-radius: 5px;
+      margin-left: 2px;
+      border: none;
+      background-color: rgb(85, 184, 201);
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .filter-box {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .filter-label {
+      margin-right: 10px;
+    }
+
+    .filter-select {
+      padding: 8px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    /* Style for the button */
+        .custom-button {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 5px;
+            background-color: #55b8c9;
+            color: #fff;
+            font-size: 12px;
+            text-decoration: none;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Hover effect */
+        .custom-button:hover {
+            background-color: #6cb3ff;
+        }
+  </style>
 </head>
 <body>
-    <h1>Trending Courses</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Provider</th>
-                <th>Ratings</th>
-                <th>Clicks</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Iterate over the list of courses -->
-            <tr th:each="course : ${courses}">
-                <td th:text="${course.title}"></td>
-                <td th:text="${course.provider}"></td>
-                <td th:text="${course.ratings}"></td>
-            </tr>
-        </tbody>
-    </table>
+  <!-- Navbar Start -->
+<nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
+  <a href="/" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+      <h2 class="m-0 text-primary"><i class="fa fa-book me-3"></i>Coursurf</h2>
+  </a>
+  <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+      <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarCollapse">
+      <div class="navbar-nav ms-auto p-4 p-lg-0">
+          <a href="/" class="nav-item nav-link active">Home</a>
+          <a href="/about" class="nav-item nav-link">About</a>
+          <a href="/courses" class="nav-item nav-link">Courses</a>        
+      </div>
+      <a href="" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Sign Up<i class="fa fa-arrow-right ms-3"></i></a>
+  </div>
+</nav>
+<!-- Navbar End -->
+  <div class="outer-container">
+    <h2 style="text-align: center; margin-bottom: 20px; background-color: rgb(85, 184, 201); color: white;">Trending Courses</h2>
+    <div class="inner-container">
+      <!-- Dynamic cards will be inserted here -->
+      <!-- <div class="card">
+        <div class="sticker sticker-blue">New</div>
+        <div class="card-image">
+          <img src="https://via.placeholder.com/300" alt="Card Image">
+        </div>
+        <div class="card-content">
+          <div class="card-title">Course Title</div>
+          <div class="card-description">Description of the course goes here. It can be a bit longer to see how it wraps.</div>
+          <div class="card-provider">Provider: Course Provider</div>
+          <div class="card-rating">Rating: 4</div>
+        </div>
+      </div> -->
+      <div th:each="course:${courses}" class="card">
+        <!-- <div class="sticker sticker-blue">New</div> -->
+        <!-- <div class="card-image">
+            <img th:src="${course.image}" alt="Card Image">
+        </div> -->
+        <div class="card-content">
+            <div class="card-title" th:text="${course.title}"></div>
+            <!-- <div class="card-description" th:text="${course.overview}">Description of the course goes here. It can be a bit longer to see how it wraps.</div> -->
+            <div class="card-provider" th:text="'Provider: ' + ${course.provider}"></div>
+            <div class="card-rating" th:text="'Rating: ' + ${course.ratings}" style="margin-bottom: 10px;"></div>
+            <a th:href="${course.link}" class="custom-button" target="_blank">Visit Website</a>
+        </div>
+    </div>
+      <!-- Repeat the above card structure for multiple cards -->
+    </div>
+  </div>
 </body>
-</html>
+
+
