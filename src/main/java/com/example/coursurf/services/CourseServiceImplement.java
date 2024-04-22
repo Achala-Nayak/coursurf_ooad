@@ -19,8 +19,8 @@ import com.example.coursurf.utils.myUtils;
 @Service
 public class CourseServiceImplement implements CourseService{
 
-    @Autowired
-    private DbProperties dbProperties;
+    // @Autowired
+    // private DbProperties dbProperties;
 
     @Autowired
     private DataSource dataSource;
@@ -121,6 +121,8 @@ public class CourseServiceImplement implements CourseService{
                     course.setProvider(resultSet.getString("Provider"));
                     course.setRatings(resultSet.getInt("ratings"));
                     course.setClicks(resultSet.getInt("clicks"));
+                    course.setLink(resultSet.getString("Link"));
+                    course.setUrl(resultSet.getString("url"));
                     trendingData.add(course);
                 }
             }
