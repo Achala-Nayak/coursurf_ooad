@@ -3,6 +3,9 @@ package com.example.coursurf.services;
 import com.example.coursurf.model.Course;
 import java.sql.*;
 import java.util.List;
+
+import javax.sql.DataSource;
+
 import java.util.ArrayList;
 
 
@@ -19,12 +22,15 @@ public class CourseServiceImplement implements CourseService{
     @Autowired
     private DbProperties dbProperties;
 
+    @Autowired
+    private DataSource dataSource;
+
     @Override
     public Course getCourseInfo(String name) {
         Course course = null;
 
-        String jdbcUrl = "jdbc:mysql://" + dbProperties.getHost() + ":" + dbProperties.getPort() + "/" + dbProperties.getDatabase();
-        try (Connection connection = DriverManager.getConnection(jdbcUrl, dbProperties.getUser(), dbProperties.getPassword())) {
+        // String jdbcUrl = "jdbc:mysql://" + dbProperties.getHost() + ":" + dbProperties.getPort() + "/" + dbProperties.getDatabase();
+        try (Connection connection = dataSource.getConnection()) {
             String query = "SELECT * FROM courses WHERE name = ?"; // Modify this query based on your database schema
 
             try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -63,8 +69,8 @@ public class CourseServiceImplement implements CourseService{
         // Implement database access logic here using DataSource and PreparedStatement
         List<Course> data = new ArrayList<>();
 
-        String jdbcUrl = "jdbc:mysql://" + dbProperties.getHost() + ":" + dbProperties.getPort() + "/" + dbProperties.getDatabase();
-        try (Connection connection = DriverManager.getConnection(jdbcUrl, dbProperties.getUser(), dbProperties.getPassword())) {
+        // String jdbcUrl = "jdbc:mysql://" + dbProperties.getHost() + ":" + dbProperties.getPort() + "/" + dbProperties.getDatabase();
+        try (Connection connection = dataSource.getConnection()) {
             String query = myUtils.buildQuery(searchQuery, provider, rating, limit);
 
             try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -102,8 +108,8 @@ public class CourseServiceImplement implements CourseService{
         // Implement database access logic here using DataSource and PreparedStatement
         List<Course> trendingData = new ArrayList<>();
 
-        String jdbcUrl = "jdbc:mysql://" + dbProperties.getHost() + ":" + dbProperties.getPort() + "/" + dbProperties.getDatabase();
-        try (Connection connection = DriverManager.getConnection(jdbcUrl, dbProperties.getUser(), dbProperties.getPassword())) {
+        // String jdbcUrl = "jdbc:mysql://" + dbProperties.getHost() + ":" + dbProperties.getPort() + "/" + dbProperties.getDatabase();
+        try (Connection connection = dataSource.getConnection()) {
             String query = myUtils.buildTrendingQuery(limit);
 
             try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -128,9 +134,9 @@ public class CourseServiceImplement implements CourseService{
     
     
     public boolean incrementClick(String title) {
-        String jdbcUrl = "jdbc:mysql://" + dbProperties.getHost() + ":" + dbProperties.getPort() + "/" + dbProperties.getDatabase();
+        // String jdbcUrl = "jdbc:mysql://" + dbProperties.getHost() + ":" + dbProperties.getPort() + "/" + dbProperties.getDatabase();
     
-        try (Connection connection = DriverManager.getConnection(jdbcUrl, dbProperties.getUser(), dbProperties.getPassword())) {
+        try (Connection connection = dataSource.getConnection()) {
             String updateQuery = "UPDATE ProcessedCourses SET clicks = clicks + 1 WHERE title = ?";
     
             try (PreparedStatement statement = connection.prepareStatement(updateQuery)) {
