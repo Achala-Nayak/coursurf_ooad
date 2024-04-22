@@ -36,9 +36,7 @@ public class myUtils {
         if (provider != null && !provider.isEmpty()) {
             queryBuilder.append(" AND Provider LIKE " + sanitize(provider));
         }
-        
-        queryBuilder.append(" ORDER BY clicks DESC");
-
+    
         if (rating != null && rating > 0) {
             queryBuilder.append(" AND ratings > " + sanitize(rating));
         }
